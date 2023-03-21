@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<title>filesystem:// URL navigation</title>
+<style>iframe{display:block}</style>
+<iframe id="iframe"></iframe>
+<button>test</button>
+<script>
+function errorHandler(e) {
+  console.log(`error!!!! ${e}`);
+}
+
+function init(fs) {
+  fs.root.getFile('lol.txt', {create: true}, function(fileEntry) {
+    fileEntry.createWriter(function(fileWriter) {
+      fileWriter.onwriteend = function(e) {
+        const url = fileEntry.toURL();
+        const button = document.querySelector("button");
+        window.iframe.src = url;
+
+        button.addEventListener("click", function() {
+          window.open(url);
+        });
+      };
+      fileWriter.onerror = window.errorHandler;
+      var blob = new Blob([`Sup from: ${fileEntry.toURL()}`], {type: 'text/plain'});
+      fileWriter.write(blob);
+    }, errorHandler);
+  }, errorHandler);
+}
+
+window.webkitRequestFileSystem(window.TEMPORARY, 1024*1024, init, errorHandler);
+</script>
